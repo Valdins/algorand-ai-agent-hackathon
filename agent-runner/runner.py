@@ -229,20 +229,42 @@ class AlgorandAgentSystem:
     def run(self) -> Dict[str, Any]:
         """Execute the complete agent workflow"""
         log("=" * 60)
-        log("Starting Algorand Smart Contract Deployment (Hardcoded Hello World)")
+        log("Starting Algorand Smart Contract AI Agent System")
         log("=" * 60)
 
         try:
-            # BYPASS ALL AI - Just deploy Hello World directly
-            log("Skipping AI agents - using hardcoded Hello World contract")
-
-            # Phase 1: Project Setup (no AI needed)
+            # Phase 1: Project Setup
             self.setup_project()
 
-            # Phase 2: Create hardcoded contract (no AI needed)
-            self._create_hardcoded_hello_world()
+            # Phase 2: Planning Agent - Analyze prompt and create plan
+            log("\n" + "=" * 60)
+            log("PHASE 2: PLANNING")
+            log("=" * 60)
+            requirements = self.planner_agent()
 
-            # Phase 3: Deploy (no AI needed)
+            if not requirements:
+                log("WARNING: Planning returned no requirements, using basic structure")
+                requirements = ["Basic smart contract functionality"]
+
+            # Phase 3: Coding Agent - Generate smart contract
+            log("\n" + "=" * 60)
+            log("PHASE 3: CODE GENERATION")
+            log("=" * 60)
+            self.coding_agent()
+
+            # Phase 4: Testing Agent - Generate and run tests
+            log("\n" + "=" * 60)
+            log("PHASE 4: TESTING")
+            log("=" * 60)
+            tests_passed = self.testing_agent()
+
+            if not tests_passed:
+                log("WARNING: Tests did not pass, but continuing with deployment")
+
+            # Phase 5: Deployment Agent - Deploy to LocalNet
+            log("\n" + "=" * 60)
+            log("PHASE 5: DEPLOYMENT")
+            log("=" * 60)
             self.deployment_agent()
 
             # Return final result
@@ -252,7 +274,7 @@ class AlgorandAgentSystem:
                 "project_name": self.project_name,
                 "contract_name": self.contract_name,
                 "transaction_id": self.deployment_result.get("transaction_id", ""),
-                "prompt_excerpt": "Hardcoded Hello World contract",
+                "prompt_excerpt": self.prompt[:100] + "..." if len(self.prompt) > 100 else self.prompt,
             }
 
         except Exception as e:
@@ -385,12 +407,123 @@ Use the search_documentation tool to find relevant information.
     def coding_agent(self):
         """Coding Agent: Generate the smart contract code"""
         log("=" * 60)
-        log("CODING AGENT: Using hardcoded Hello World contract for testing...")
+        log("CODING AGENT: Generating smart contract from prompt...")
         log("=" * 60)
 
-        # Skip AI generation for now, use hardcoded contract
-        log("Creating Hello World contract (hardcoded for testing)")
-        self._create_hardcoded_hello_world()
+        agent = CodeAgent(
+            tools=[write_file, read_file, execute_shell_command],
+            model=self.model,
+            max_steps=15,
+        )
+
+        coding_prompt = f"""
+You are an expert Algorand smart contract developer using Beaker framework.
+
+User's request: {self.prompt}
+
+You must create a Beaker smart contract that fulfills the user's requirements.
+
+CRITICAL IMPORT RULES (MUST FOLLOW EXACTLY):
+1. Import Application from beaker: `from beaker import Application, GlobalStateValue`
+2. Import PyTeal components: `from pyteal import *`
+3. NEVER import abi from beaker - it comes from pyteal automatically with `from pyteal import *`
+
+FILE REQUIREMENTS:
+1. File location: {self.project_name}/smart_contracts/{self.contract_name}/contract.py
+2. Contract must export an Application instance named 'app'
+3. Use Beaker decorators (@app.external, @app.external(read_only=True))
+
+EXACT CONTRACT TEMPLATE (COPY THIS STRUCTURE):
+```python
+from beaker import Application, GlobalStateValue
+from pyteal import *
+
+# Create the application
+app = Application("{self.contract_name}")
+
+# Define state variables if needed (example)
+# counter = GlobalStateValue(
+#     stack_type=TealType.uint64,
+#     key="counter",
+#     default=Int(0)
+# )
+
+@app.external
+def hello(name: abi.String, *, output: abi.String) -> Expr:
+    \"\"\"Say hello to someone\"\"\"
+    return output.set(Concat(Bytes("Hello, "), name.get()))
+
+# Add more methods based on user requirements
+```
+
+EXAMPLES OF CORRECT CODE:
+
+Example 1 - Counter Contract:
+```python
+from beaker import Application, GlobalStateValue
+from pyteal import *
+
+app = Application("Counter")
+
+counter = GlobalStateValue(
+    stack_type=TealType.uint64,
+    key="counter",
+    default=Int(0)
+)
+
+@app.external
+def increment() -> Expr:
+    return counter.set(counter + Int(1))
+
+@app.external(read_only=True)
+def get_counter(*, output: abi.Uint64) -> Expr:
+    return output.set(counter)
+```
+
+Example 2 - Greeting Contract:
+```python
+from beaker import Application
+from pyteal import *
+
+app = Application("Greeter")
+
+@app.external
+def greet(name: abi.String, *, output: abi.String) -> Expr:
+    return output.set(Concat(Bytes("Hello, "), name.get()))
+```
+
+RULES:
+- Use @app.external decorator for methods that modify state
+- Use @app.external(read_only=True) for view-only methods
+- ABI types: abi.String, abi.Uint64, abi.Uint32, abi.Bool, abi.Address
+- All ABI methods with return values need `*, output: abi.Type` parameter
+- Use GlobalStateValue for persistent storage (counter, flags, etc.)
+- Keep the contract simple and focused on the user's requirements
+
+Now create the contract file using write_file tool. Follow the template EXACTLY, especially the imports!
+"""
+
+        try:
+            result = agent.run(coding_prompt)
+            log("✓ Smart contract generated successfully")
+            log(f"Agent result: {result}")
+
+            # Verify contract was created
+            contract_path = self.workspace / self.project_name / "smart_contracts" / self.contract_name / "contract.py"
+            if not contract_path.exists():
+                log("WARNING: Contract file was not created by agent, using fallback")
+                self._create_fallback_contract()
+
+            # Create __init__.py if missing
+            init_path = contract_path.parent / "__init__.py"
+            if not init_path.exists():
+                init_path.write_text("")
+                log(f"Created __init__.py at {init_path}")
+
+        except Exception as e:
+            log(f"ERROR in coding agent: {e}")
+            log("Using fallback contract due to agent failure")
+            self._create_fallback_contract()
 
     def _create_hardcoded_hello_world(self):
         """Create hardcoded Hello World contract for testing deployment"""
@@ -533,8 +666,8 @@ Use the write_file and execute_shell_command tools.
 import sys
 import os
 from algosdk.v2client import algod
+from beaker.client import ApplicationClient
 import algokit_utils
-from smart_contracts.{self.contract_name}.contract import app
 
 # Connect to LocalNet
 algod_server = os.getenv("ALGOD_SERVER", "{algod_server}")
@@ -543,30 +676,47 @@ algod_token = os.getenv("ALGOD_TOKEN", "{algod_token}")
 print(f"Connecting to Algorand node at {{algod_server}}...")
 
 try:
+    # Create algod client
     algod_client = algod.AlgodClient(algod_token, algod_server)
     status = algod_client.status()
     print(f"✓ Connected to node. Last round: {{status.get('last-round')}}")
 except Exception as e:
     print(f"ERROR: Cannot connect to Algorand node: {{e}}", file=sys.stderr)
+    import traceback
+    traceback.print_exc(file=sys.stderr)
     sys.exit(1)
 
 try:
-    account = algokit_utils.get_localnet_default_account(algod_client)
-    print(f"✓ Using account: {{account.address}}")
+    # Get LocalNet default account
+    deployer = algokit_utils.get_localnet_default_account(algod_client)
+    print(f"✓ Using deployer account: {{deployer.address}}")
 except Exception as e:
     print(f"ERROR: Cannot get LocalNet account: {{e}}", file=sys.stderr)
+    import traceback
+    traceback.print_exc(file=sys.stderr)
     sys.exit(1)
 
 try:
     print("Deploying contract...")
-    app_id, app_addr, txn_id = app.create(
-        algod_client,
-        signer=account.signer,
-        sender=account.address,
+
+    # Import the Beaker app
+    from smart_contracts.{self.contract_name}.contract import app
+
+    # Create ApplicationClient with the Beaker app
+    app_client = ApplicationClient(
+        client=algod_client,
+        app=app,
+        signer=deployer.signer,
+        sender=deployer.address,
     )
+
+    # Deploy the application
+    app_id, app_addr, txn_id = app_client.create()
+
     print(f"DEPLOYED_APP_ID: {{app_id}}")
     print(f"DEPLOYED_TXN: {{txn_id}}")
     print(f"✓ Deployment successful!")
+
 except Exception as e:
     print(f"ERROR: Deployment failed: {{e}}", file=sys.stderr)
     import traceback
