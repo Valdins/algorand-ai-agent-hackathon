@@ -1,0 +1,31 @@
+<div class="generate-page">
+    <app-header></app-header>
+
+    <div class="container">
+      <div *ngIf="!isWalletConnected" class="wallet-required">
+        <div class="wallet-required-content">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="40" fill="#f7fafc"/>
+            <path d="M55 30H25a5 5 0 00-5 5v20a5 5 0 005 5h30a5 5 0 005-5V35a5 5 0 00-5-5zM25 35h30M40 45v5" stroke="#667eea" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <h2>Wallet Connection Required</h2>
+          <p>Please connect your Algorand wallet to generate and deploy smart contracts.</p>
+          <button class="connect-prompt-button" (click)="scrollToHeader()">
+            Connect Wallet
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="isWalletConnected" class="generate-content">
+        <app-prompt-input
+          (promptSubmit)="onPromptSubmit($event)"
+          [initialPrompt]="initialPrompt">
+        </app-prompt-input>
+
+        <app-task-status
+          *ngIf="currentTask"
+          [task]="currentTask">
+        </app-task-status>
+      </div>
+    </div>
+</div>

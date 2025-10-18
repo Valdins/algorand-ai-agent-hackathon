@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-dotenv
+docker
+py-algorand-sdk>=2.7.0

@@ -1,0 +1,56 @@
+networks:
+  algorand-network:
+    driver: bridge
+
+services:
+  # Note: Using existing AlgoKit LocalNet running on host
+  # No need to start a separate container
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: algorand-backend
+    environment:
+      - AGENT_IMAGE=agent-runner:latest
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    # Allow backend to start agent containers
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - algorand-network
+    depends_on:
+      agent-runner:
+        condition: service_started
+      # algorand-localnet:
+      #   condition: service_healthy
+
+  frontend:
+    image: node:20-alpine
+    container_name: algorand-frontend
+    working_dir: /app
+    volumes:
+      - ./frontend/algorand-ai-agent:/app
+    command: sh -c "npm ci && npm run start -- --host 0.0.0.0"
+    ports:
+      - "4200:4200"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - algorand-network
+    depends_on:
+      - backend
+
+  agent-runner:
+    build:
+      context: .
+      dockerfile: agent-runner/Dockerfile
+    image: agent-runner:latest
+    container_name: algorand-agent-runner-build
+    networks:
+      - algorand-network
+    # This service is built as an image used by backend; it doesn't need to run persistently
+    entrypoint: ["sleep", "infinity"]

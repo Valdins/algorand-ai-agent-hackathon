@@ -1,0 +1,7 @@
+smolagents
+langchain
+langchain-openai
+openai
+python-dotenv
+pydantic
+smolagents[litellm]

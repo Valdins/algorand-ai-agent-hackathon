@@ -1,0 +1,71 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Build Algorand Smart Contracts
+        <span class="gradient-text">with AI</span>
+      </h1>
+      <p class="hero-subtitle">
+        Describe your smart contract in plain English. Our AI generates, tests, and deploys it to Algorand in minutes.
+      </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-value">0.5</div>
+          <div class="stat-label">ALGO per deployment</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">&lt;2min</div>
+          <div class="stat-label">Average generation time</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Tested before deploy</div>
+        </div>
+      </div>
+      <button class="cta-button" (click)="getStarted()">
+        <span>Get Started</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2 class="section-title">Powerful Features</h2>
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let feature of features">
+        <div class="feature-icon">{{feature.icon}}</div>
+        <h3 class="feature-title">{{feature.title}}</h3>
+        <p class="feature-description">{{feature.description}}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Examples Section -->
+  <section class="examples">
+    <h2 class="section-title">Example Contracts</h2>
+    <p class="section-subtitle">Get started with these popular smart contract templates</p>
+    <div class="examples-grid">
+      <div class="example-card" *ngFor="let example of examples" (click)="tryExample(example.prompt)">
+        <div class="example-icon">{{example.icon}}</div>
+        <h3 class="example-title">{{example.title}}</h3>
+        <p class="example-description">{{example.description}}</p>
+        <button class="example-button">
+          Try this example →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <h2 class="cta-title">Ready to build your smart contract?</h2>
+    <p class="cta-subtitle">Connect your Algorand wallet and start generating contracts in seconds</p>
+    <button class="cta-button-secondary" (click)="getStarted()">
+      Start Building
+    </button>
+  </section>
+</div>

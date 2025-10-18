@@ -1,0 +1,43 @@
+<div class="app">
+  <app-header [isConnected]="isConnected"></app-header>
+
+  <main class="main-content">
+    <div class="container">
+      <!-- Prompt Input -->
+      <app-prompt-input
+        [isDisabled]="isProcessing"
+        [showClear]="!!currentTask"
+        (submit)="onSubmit($event)"
+        (clear)="onClear()"
+      ></app-prompt-input>
+
+      <!-- Task Status -->
+      <app-task-status
+        *ngIf="currentTask"
+        [task]="currentTask"
+      ></app-task-status>
+
+      <!-- Error Toast -->
+      <div class="toast toast-error" *ngIf="errorMessage" [@slideIn]>
+        <div class="toast-content">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+          </svg>
+          <span>{{errorMessage}}</span>
+        </div>
+        <button (click)="clearError()" class="toast-close">×</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>Built with ❤️ for the Algorand AI Agent Hackathon</p>
+      <div class="footer-links">
+        <a href="/docs" target="_blank">API Docs</a>
+        <a href="https://github.com" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
