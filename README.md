@@ -30,7 +30,6 @@ This video covers:
 - ✅ Live demonstration of AI-generated smart contract deployment
 - ✅ Code structure and architecture explanation
 - ✅ How the multi-agent system works
-- ✅ Wallet integration and payment flow
 - ✅ Smart contract functionality on Algorand
 
 ---
@@ -38,27 +37,21 @@ This video covers:
 ## 📸 Screenshots
 
 ### 🏠 Landing Page
-![Landing Page](./docs/images/screenshot-home.png)
-*Beautiful gradient hero section with project stats and CTA*
+![Landing Page](./docs/images/landing_page_1.png)
+![Landing Page](./docs/images/landing_page_2.png)
+![Landing Page](./docs/images/landing_page_3.png)
 
 ### 🤖 AI Contract Generation
-![Contract Generation](./docs/images/screenshot-generate.png)
+![Contract Generation](./docs/images/generate_1.png)
+![Contract Generation](./docs/images/generate_2.png)
 *Enter natural language prompts to generate smart contracts*
 
-### 💼 Wallet Integration
-![Wallet Connect](./docs/images/screenshot-wallet.png)
-*Connect Pera, Defly, or Exodus wallets for payment*
-
-### 💳 Payment Flow
-![Payment Modal](./docs/images/screenshot-payment.png)
-*Pay 0.5 ALGO to deploy custom contracts*
-
 ### 📊 Deployment Results
-![Deployment Success](./docs/images/screenshot-result.png)
+![Deployment Success](./docs/images/generate_3.png)
 *View deployed contract details and transaction IDs*
 
 ### 🔍 Block Explorer
-![Block Explorer](./docs/images/screenshot-explorer.png)
+![Block Explorer](./docs/images/chain_1.png)
 *Verify deployed contracts on Algorand block explorer*
 
 ---
@@ -68,8 +61,6 @@ This video covers:
 ### 🎯 Core Features
 
 - **🤖 AI-Powered Generation**: Describe your smart contract in plain English, AI generates the Beaker/PyTeal code
-- **💰 Wallet Integration**: Connect Algorand wallets (Pera, Defly, Exodus) for payments
-- **💳 Payment System**: Pay 0.5 ALGO per contract deployment via on-chain transactions
 - **🚀 One-Click Deployment**: Generated contracts deploy directly to Algorand LocalNet
 - **📊 Real-time Progress**: Watch live logs as AI agents plan, code, test, and deploy
 - **🔄 Multi-Agent System**: Specialized AI agents for each phase of development
@@ -117,7 +108,7 @@ def get_counter(*, output: abi.Uint64) -> Expr:
     return output.set(counter)
 ```
 
-**📦 Deployed Contract:** [View on Lora Explorer](https://lora.algokit.io/localnet/application/YOUR_APP_ID)
+**📦 Deployed Contract:** [View on Lora Explorer](./docs/images/contract_1.png)
 
 ---
 
