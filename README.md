@@ -15,6 +15,18 @@
 
 ---
 
+**Short Summary**
+
+An AI agent that writes and deploys Algorand smart contracts from a natural language prompt, using a full-stack Python, Angular, and FastAPI app.
+
+**Full Description**
+
+This project solves the high barrier to entry for blockchain development by automating the entire smart contract creation lifecycle. Traditionally, a developer needs specialized knowledge of languages like algorand-python or PyTeal, understands the compilation process, and must be familiar with deployment scripts. This tool abstracts away that complexity. A user simply provides a high-level, natural language description of the desired contract. A multi-agent AI system then takes over, researching the requirements, writing the code, and deploying it directly to the blockchain.   
+
+Algorand serves as the execution layer and target platform for this AI-driven development tool. The agent generates smart contracts specifically for the Algorand Virtual Machine (AVM) and uses Algorand's official Python SDK to interact with the network. The project culminates in the deployment of a fully functional application on the Algorand Testnet, providing the user with an immediate, verifiable on-chain asset. Algorand's fast, low-cost transaction environment makes it ideal for the rapid, iterative prototyping that this tool is designed to facilitate.   
+
+
+
 ## 🎥 Demo Video
 
 > **Watch the full demo and code walkthrough:**
