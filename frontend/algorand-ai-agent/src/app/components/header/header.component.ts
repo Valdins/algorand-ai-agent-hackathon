@@ -24,7 +24,7 @@ import { WalletConnectComponent } from '../wallet-connect/wallet-connect.compone
             </svg>
           </div>
           <div class="title-section">
-            <h1 class="title">Algorand AI Agent</h1>
+            <h1 class="title">AlgoSmartForge</h1>
             <p class="subtitle">Generate smart contracts with natural language</p>
           </div>
         </div>

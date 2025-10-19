@@ -11,17 +11,17 @@ import { WalletId } from '@txnlab/use-wallet';
   template: `
     <div class="wallet-connect">
       <!-- Not Connected State -->
-<!--      <div *ngIf="!walletInfo.connected" class="connect-section">-->
-<!--        <button class="wallet-button" (click)="showWalletModal = true">-->
-<!--          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">-->
-<!--            <path d="M17 8h-2V5a5 5 0 00-10 0v3H3a2 2 0 00-2 2v7a2 2 0 002 2h14a2 2 0 002-2v-7a2 2 0 00-2-2zM7 5a3 3 0 016 0v3H7V5z" fill="currentColor"/>-->
-<!--          </svg>-->
-<!--          <span>Connect Wallet</span>-->
-<!--        </button>-->
-<!--      </div>-->
+      <div *ngIf="!walletInfo.connected" class="connect-section">
+        <button class="wallet-button" (click)="showWalletModal = true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M17 8h-2V5a5 5 0 00-10 0v3H3a2 2 0 00-2 2v7a2 2 0 002 2h14a2 2 0 002-2v-7a2 2 0 00-2-2zM7 5a3 3 0 016 0v3H7V5z" fill="currentColor"/>
+          </svg>
+          <span>Connect Wallet</span>
+        </button>
+      </div>
 
       <!-- Connected State -->
-      <div *ngIf="!walletInfo.connected" class="connected-section">
+      <div *ngIf="walletInfo.connected" class="connected-section">
         <div class="wallet-info">
           <div class="network-badge">LocalNet</div>
           <div class="address">
