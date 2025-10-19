@@ -440,23 +440,6 @@ This link shows:
 
 ---
 
-## 🎯 Hackathon Requirements Checklist
-
-### ✅ Requirements Met
-
-- [x] **Custom Smart Contract**: Fully AI-generated, not boilerplate
-- [x] **Demo Video**: Complete walkthrough with audio explanation
-- [x] **Screenshots**: UI screenshots showing all features
-- [x] **Smart Contract Description**: Detailed explanation of how it works
-- [x] **GitHub README**: Comprehensive documentation
-- [x] **Block Explorer Link**: Deployed contract verification
-- [x] **Fully Functioning**: All features work end-to-end
-- [x] **Payment Integration**: On-chain ALGO payments
-- [x] **Wallet Integration**: Multiple wallet support
-- [x] **AI Integration**: Multi-agent system for generation
-
----
-
 ## 🚧 Development
 
 ### Running Tests
@@ -501,43 +484,6 @@ All configuration in `.env`:
 | `ALGOD_SERVER` | LocalNet URL | No (default set) |
 | `ALGOD_TOKEN` | LocalNet token | No (default set) |
 
----
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**1. LocalNet Connection Failed**
-```bash
-# Check LocalNet status
-algokit localnet status
-
-# Restart LocalNet
-algokit localnet reset
-```
-
-**2. Wallet Won't Connect**
-- Ensure wallet browser extension is installed
-- Check you're on LocalNet in wallet settings
-- Try refreshing the page
-
-**3. Payment Verification Failed**
-- Verify you have sufficient ALGO balance
-- Confirm transaction in your wallet
-- Check `PAYMENT_RECEIVER_ADDRESS` is set
-
-**4. Contract Generation Failed**
-- Check Azure OpenAI API key is valid
-- Verify you haven't hit rate limits
-- Check agent-runner logs: `docker-compose logs agent-runner`
-
-**5. Deployment Failed**
-- Ensure LocalNet is running
-- Check AlgoKit is installed: `algokit --version`
-- Verify Docker containers can reach LocalNet
-
----
-
 ## 📝 API Documentation
 
 Full API docs available at: http://localhost:8000/docs
@@ -580,14 +526,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **AlgoKit Team** - For the excellent development toolkit
 - **Anthropic** - For Claude AI assistance
 - **Hackathon Organizers** - For the opportunity
-
----
-
-## 📞 Contact
-
-- **Project Link**: https://github.com/yourusername/algorand-ai-agent-hackathon
-- **Demo Video**: [Watch Here](YOUR_VIDEO_LINK)
-- **Documentation**: [Read the Docs](YOUR_DOCS_LINK)
 
 ---
 
