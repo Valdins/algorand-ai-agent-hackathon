@@ -21,9 +21,9 @@
 
 > **Watch the full demo and code walkthrough:**
 
-[![AlgoSmartForge Demo](./docs/images/video-thumbnail.png)](YOUR_DEMO_VIDEO_LINK_HERE)
+[![AlgoSmartForge Demo](./docs/images/video-thumbnail.png)](https://youtu.be/8Gws0HrRkos)
 
-**📹 [Click here to watch the demo video](YOUR_DEMO_VIDEO_LINK_HERE)**
+**📹 [Click here to watch the demo video](https://youtu.be/8Gws0HrRkos)**
 
 This video covers:
 - ✅ Complete project walkthrough
